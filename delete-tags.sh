@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # delete remote and local tags
 
 VERBOSE=
 REMOTE=0
 LOCAL=1
-TAGCOUNT=0
+TAG_COUNT=0
 
 usage()
 {
@@ -40,7 +40,7 @@ configure()
         usage
     fi
 
-    if [ $LOCAL = 0 ] && [ $REMOTE = 0 ]
+    if [ ${LOCAL} = 0 ] && [ ${REMOTE} = 0 ]
     then
         echo "You have to be sure about deleting at least local or remote."
         usage
@@ -49,12 +49,12 @@ configure()
 
 getTags()
 {
-    git tag | grep $VERBOSE$TAGS
+    git tag | grep ${VERBOSE}${TAGS}
 }
 
 getRemoteTags()
 {
-    git ls-remote -t -q --refs | grep -o $VERBOSE"refs/tags/.*${TAGS}.*" | sed -e "s/refs\/tags\///g"
+    git ls-remote -t -q --refs | grep -o ${VERBOSE}"refs/tags/.*${TAGS}.*" | sed -e "s/refs\/tags\///g"
 }
 
 countTags()
@@ -62,33 +62,33 @@ countTags()
     if [ $1 = 0 ]
     then
         local TEXT="\033[1;33mNo $2 tags found "
-        if [ $VERBOSE ]
+        if [ ${VERBOSE} ]
         then
             TEXT="$TEXT excluding "
         else
             TEXT="$TEXT containing "
         fi
         TEXT="$TEXT '$TAGS'"
-        echo $TEXT
+        echo ${TEXT}
     fi
-    TAGCOUNT=$(( $TAGCOUNT + $1 ))
+    TAG_COUNT=$(( $TAG_COUNT + $1 ))
 }
 
 checkLocalTags()
 {
-    if [ $LOCAL = 1 ]
+    if [ ${LOCAL} = 1 ]
     then
         local COUNT=`getTags | wc -w`
-        countTags $COUNT 'local'
+        countTags ${COUNT} 'local'
     fi
 }
 
 checkRemoteTags()
 {
-    if [ $REMOTE = 1 ]
+    if [ ${REMOTE} = 1 ]
     then
         local COUNT=`getRemoteTags | wc -w`
-        countTags $COUNT 'remote'
+        countTags ${COUNT} 'remote'
     fi
 }
 
@@ -96,7 +96,7 @@ checkTags()
 {
     checkLocalTags
     checkRemoteTags
-    if [ $TAGCOUNT = 0 ]
+    if [ ${TAG_COUNT} = 0 ]
     then
         exit
     fi
@@ -104,12 +104,12 @@ checkTags()
 
 deleteTags()
 {
-    if [ $REMOTE = 1 ]
+    if [ ${REMOTE} = 1 ]
     then
         getRemoteTags | xargs git push --delete origin
     fi
     
-    if [ $LOCAL = 1 ]
+    if [ ${LOCAL} = 1 ]
     then
         getTags | xargs git tag -d
     fi
@@ -121,13 +121,13 @@ confirm()
 {
     echo "\033[1;34mConfirm deleting the following available tags\033[0m"
 
-    if [ $LOCAL = 1 ]
+    if [ ${LOCAL} = 1 ]
     then
         echo "\033[1;33mLocal\033[0m"
         getTags | xargs | sed 's| |\ \ \|\ \ |g'
     fi
 
-    if [ $REMOTE = 1 ]
+    if [ ${REMOTE} = 1 ]
     then
         echo "\033[1;33mRemote\033[0m"
         getRemoteTags | xargs | sed 's| |\ \ \|\ \ |g'
