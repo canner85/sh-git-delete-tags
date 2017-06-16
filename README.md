@@ -1,8 +1,9 @@
 # sh-git-delete-tags
 
 [![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+[![GitHub release](https://img.shields.io/github/release/canner85/sh-git-delete-tags.svg?style=flat-square)](https://github.com/canner85/sh-git-delete-tags/releases)
 
-Shell script to delete local and remote git tags. Script prompts before deleting.
+Shell script to delete local and remote git tags, prompts before deleting. Build on Mac OS 10.12.
 
 ## Usage
 
@@ -27,3 +28,7 @@ Shell script to delete local and remote git tags. Script prompts before deleting
 	- search for remote tag names including "v1.0"
 - `git.deleteTag v1.0 -v`
 	- search for local tag names except "v1.0"
+
+## License
+
+This work is licensed under the [The MIT License](LICENSE).
