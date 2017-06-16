@@ -1,5 +1,7 @@
 # sh-git-delete-tags
 
+[![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+
 Shell script to delete local and remote git tags. Script prompts before deleting.
 
 ## Usage
