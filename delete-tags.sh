@@ -54,7 +54,12 @@ getTags()
 
 getRemoteTags()
 {
-    git ls-remote -t -q --refs | grep -o ${VERBOSE}"refs/tags/.*${TAGS}.*" | sed -e "s/refs\/tags\///g"
+    if [ ${VERBOSE} ]
+    then
+        git ls-remote -t -q --refs | grep -o "refs/tags/.*" | grep -v ${TAGS}  | sed -e "s/refs\/tags\///g"
+    else
+        git ls-remote -t -q --refs | grep -o ${VERBOSE}"refs/tags/.*${TAGS}.*" | sed -e "s/refs\/tags\///g"
+    fi
 }
 
 countTags()
@@ -108,7 +113,7 @@ deleteTags()
     then
         getRemoteTags | xargs git push --delete origin
     fi
-    
+
     if [ ${LOCAL} = 1 ]
     then
         getTags | xargs git tag -d
@@ -135,7 +140,7 @@ confirm()
 
     read -p "Are you sure? (N/y)" -n 1 -r
     echo ""
-    
+
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
         echo "Deleting aborted"
