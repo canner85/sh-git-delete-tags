@@ -8,7 +8,7 @@ Shell script to delete local and remote git tags, prompts before deleting. Build
 ## Usage
 
 1. Copy the [script](delete-tags.sh) to your desired directory (lets say to your root folder `~`. 
-2. Make it readable `chmod +x ~/delete-tags.sh`.
+2. Make it executable `chmod +x ~/delete-tags.sh`.
 3. Create an alias for global usage `alias git.deleteTags='~/delete-tags.sh'`
 4. `cd` into your repo folder
 5. Execute `git.deleteTags <tagNames> [-v|--verbose] [-r|--remote]`
