@@ -15,7 +15,7 @@ Shell script to delete local and remote git tags, prompts before deleting. Build
 	1. `tagNames` represents a string to search for in your tag list
 	2. `-v|--verbose` is used to revert the search (exclude)
 	3. `-r|--remote` is used to delete remote tags
-	4. `-il|--ignore-remote` is used to ignore local tags
+	4. `-il|--ignore-local` is used to ignore local tags
 	5. `-h|--help` show usage
 
 ## Examples
