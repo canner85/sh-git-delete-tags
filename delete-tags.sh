@@ -1,7 +1,7 @@
 #!/bin/sh
 # delete remote and local tags
 
-VERBOSE=
+INVERT=
 REMOTE=0
 LOCAL=1
 TAG_COUNT=0
@@ -10,7 +10,7 @@ usage()
 {
     echo "Usage: \n$0\n"
     echo "       <tag(s)>                -  A string to search for in tag list\n"
-    echo "       [-v  | --verbose]       -  If search should be reversed (search tags except the <tag(s)> parameter\n"
+    echo "       [-i  | --invert]        -  If search should be reversed (search tags except the <tag(s)> parameter\n"
     echo "       [-r  | --remote]        -  If remote tags should be deleted\n"
     echo "       [-il | --ignore-local]  -  If local tags should NOT be deleted\n"
     exit
@@ -23,7 +23,7 @@ configure()
             -h | --help )           usage
                                     exit
                                     ;;
-            -v | --verbose )        VERBOSE='-v '
+            -i | --invert )         INVERT='-v '
                                     ;;
             -r | --remote )         REMOTE=1
                                     ;;
@@ -49,16 +49,16 @@ configure()
 
 getTags()
 {
-    git tag | grep ${VERBOSE}${TAGS}
+    git tag | grep ${INVERT}${TAGS}
 }
 
 getRemoteTags()
 {
-    if [ ${VERBOSE} ]
+    if [ ${INVERT} ]
     then
         git ls-remote -t -q --refs | grep -o "refs/tags/.*" | grep -v ${TAGS}  | sed -e "s/refs\/tags\///g"
     else
-        git ls-remote -t -q --refs | grep -o ${VERBOSE}"refs/tags/.*${TAGS}.*" | sed -e "s/refs\/tags\///g"
+        git ls-remote -t -q --refs | grep -o ${INVERT}"refs/tags/.*${TAGS}.*" | sed -e "s/refs\/tags\///g"
     fi
 }
 
@@ -67,7 +67,7 @@ countTags()
     if [ $1 = 0 ]
     then
         local TEXT="\033[1;33mNo $2 tags found "
-        if [ ${VERBOSE} ]
+        if [ ${INVERT} ]
         then
             TEXT="$TEXT excluding "
         else

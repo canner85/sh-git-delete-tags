@@ -13,20 +13,20 @@ Shell script to delete local and remote git tags, prompts before deleting. Build
 4. `cd` into your repo folder
 5. Execute `git.deleteTags <tagNames> [-v|--verbose] [-r|--remote]`
 	1. `tagNames` represents a string to search for in your tag list
-	2. `-v|--verbose` is used to revert the search (exclude)
-	3. `-r|--remote` is used to delete remote tags
-	4. `-il|--ignore-local` is used to ignore local tags
-	5. `-h|--help` show usage
+	2. `-i | --invert` is used to revert the search (exclude)
+	3. `-r | --remote` is used to delete remote tags
+	4. `-il| --ignore-local` is used to ignore local tags
+	5. `-h | --help` show usage
 
 ## Examples
 
-- `git.deleteTag v1.0`
+- `git.deleteTags v1.0`
 	- search for local tag names including "v1.0"
-- `git.deleteTag v1.0 -r`
+- `git.deleteTags v1.0 -r`
 	- search for local and remote tag names including "v1.0"
-- `git.deleteTag v1.0 -r -il`
+- `git.deleteTags v1.0 -r -il`
 	- search for remote tag names including "v1.0"
-- `git.deleteTag v1.0 -v`
+- `git.deleteTags v1.0 -i`
 	- search for local tag names except "v1.0"
 
 ## License
